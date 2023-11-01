@@ -14,17 +14,14 @@ public class Estacion {
 
     private Integer id;
 
-    @Column(name = "NOMBRE")
-    private String nombre;
+    @Embedded
+    private NombreEstacion nombre;
 
     @Column(name = "FECHA_HORA_CREACION")
     private LocalDateTime fechaHoraCreacion;
 
-    @Column(name = "LATITUD")
-    private Float latitud;
-
-    @Column(name = "LONGITUD")
-    private Float longitud;
+    @Embedded
+    private Coordenada coordenada;
 
 
 

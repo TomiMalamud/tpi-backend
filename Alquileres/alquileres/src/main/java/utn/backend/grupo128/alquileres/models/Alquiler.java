@@ -38,4 +38,5 @@ public class Alquiler {
     @Column(name = "ID_TARIFA")
     private Integer idTarifa;
 
+
 }
