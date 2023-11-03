@@ -1,11 +1,14 @@
 package utn.backend.grupo128.estaciones.application.controllers;
 
+import lombok.CustomLog;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import utn.backend.grupo128.estaciones.application.ResponseHandler;
+import utn.backend.grupo128.estaciones.application.request.CreateEstacionRequest;
 import utn.backend.grupo128.estaciones.application.response.EstacionResponse;
+import utn.backend.grupo128.estaciones.models.Estacion;
 import utn.backend.grupo128.estaciones.services.EstacionService;
 
 import java.util.List;
@@ -40,6 +43,22 @@ public class EstacionController {
             return ResponseHandler.badRequest(e.getMessage());
         } catch (Exception e) {
             return ResponseHandler.internalError();
+        }
+    }
+
+
+    @PostMapping
+    public ResponseEntity<Object> create(@RequestBody CreateEstacionRequest aRequest) {
+        try {
+            val estacion = service.create(
+                    aRequest.getNombre(),
+                    aRequest.getFechaHoraCreacion(),
+                    aRequest.getLatitud(),
+                    aRequest.getLongitud());
+
+            return ResponseHandler.success(EstacionResponse.from(estacion));
+        } catch (Exception e) {
+                return ResponseHandler.internalError();
         }
     }
 

@@ -1,11 +1,13 @@
 package utn.backend.grupo128.estaciones.services;
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utn.backend.grupo128.estaciones.models.Coordenada;
 import utn.backend.grupo128.estaciones.models.Estacion;
 import utn.backend.grupo128.estaciones.repositories.EstacionRepository;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,5 +49,15 @@ public class EstacionService {
         }
 
         return estacionCercana;
+    }
+
+    public Estacion create(String nombre,
+                           LocalDateTime fechaHoraCreacion,
+                           Double latitud,
+                           Double longitud) {
+
+        val estacion = new Estacion(nombre,fechaHoraCreacion,latitud,longitud);
+
+        return repository.save(estacion);
     }
 }

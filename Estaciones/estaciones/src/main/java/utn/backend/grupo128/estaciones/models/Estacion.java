@@ -24,6 +24,8 @@ public class Estacion {
     private Coordenada coordenada;
 
 
-
-
+    public Estacion(String nombre, LocalDateTime fechaHoraCreacion, Double latitud, Double longitud) {
+        this.nombre = nombre;
+        this.fechaHoraCreacion = fechaHoraCreacion;
+    }
 }

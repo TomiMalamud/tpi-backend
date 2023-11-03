@@ -29,9 +29,4 @@ public class EstacionResponse {
                 .longitud(aEstacion.getCoordenada().getLongitud())
                 .build();
     }
-
-
-
-
-
 }

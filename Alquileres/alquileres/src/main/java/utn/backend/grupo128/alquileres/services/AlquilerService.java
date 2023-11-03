@@ -22,4 +22,8 @@ public class AlquilerService {
     public List<Alquiler> getAll() {
         return repository.findAll();
     }
+
+    public Alquiler create(Alquiler alquiler) {
+        return repository.save(alquiler);
+    }
 }
