@@ -1,6 +1,7 @@
 package utn.backend.grupo128.estaciones.application.response;
 
 
+import jdk.jshell.Snippet;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
@@ -29,4 +30,6 @@ public class EstacionResponse {
                 .longitud(aEstacion.getCoordenada().getLongitud())
                 .build();
     }
+
+
 }

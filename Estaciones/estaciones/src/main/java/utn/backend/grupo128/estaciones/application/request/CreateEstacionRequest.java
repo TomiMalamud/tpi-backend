@@ -23,19 +23,6 @@ public class CreateEstacionRequest {
     @Column(name = "LONGITUD")
     Double longitud;
 
-
-    public CreateEstacionRequest(String nombre, LocalDateTime fechaHoraCreacion, Double latitud, Double longitud) {
-        this.nombre = nombre;
-        this.fechaHoraCreacion = fechaHoraCreacion;
-        this.latitud = latitud;
-        this.longitud = longitud;
-    }
-
-
-    public CreateEstacionRequest() {
-
-    }
-
     public String getNombre() {
         return nombre;
     }

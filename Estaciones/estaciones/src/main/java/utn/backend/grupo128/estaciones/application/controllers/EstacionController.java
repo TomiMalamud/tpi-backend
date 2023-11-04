@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import utn.backend.grupo128.estaciones.application.ResponseHandler;
 import utn.backend.grupo128.estaciones.application.request.CreateEstacionRequest;
 import utn.backend.grupo128.estaciones.application.response.EstacionResponse;
+import utn.backend.grupo128.estaciones.models.Coordenada;
 import utn.backend.grupo128.estaciones.models.Estacion;
+import utn.backend.grupo128.estaciones.models.NombreEstacion;
 import utn.backend.grupo128.estaciones.services.EstacionService;
 
 import java.util.List;
@@ -50,11 +52,12 @@ public class EstacionController {
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody CreateEstacionRequest aRequest) {
         try {
-            val estacion = service.create(
-                    aRequest.getNombre(),
+            Coordenada coordenada = new Coordenada(aRequest.getLatitud(), aRequest.getLongitud());
+            NombreEstacion nombre = new NombreEstacion(aRequest.getNombre());
+            Estacion estacion = service.create(
+                    nombre,
                     aRequest.getFechaHoraCreacion(),
-                    aRequest.getLatitud(),
-                    aRequest.getLongitud());
+                    coordenada);
 
             return ResponseHandler.success(EstacionResponse.from(estacion));
         } catch (Exception e) {

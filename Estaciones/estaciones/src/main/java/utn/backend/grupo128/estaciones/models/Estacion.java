@@ -23,9 +23,17 @@ public class Estacion {
     @Embedded
     private Coordenada coordenada;
 
+    public Estacion(){
 
-    public Estacion(String nombre, LocalDateTime fechaHoraCreacion, Double latitud, Double longitud) {
+    }
+
+
+    public Estacion(NombreEstacion nombre, LocalDateTime fechaHoraCreacion, Coordenada coordenada) {
         this.nombre = nombre;
         this.fechaHoraCreacion = fechaHoraCreacion;
+        this.coordenada = coordenada;
     }
+
+
+
 }
