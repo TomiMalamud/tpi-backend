@@ -15,7 +15,7 @@ public class Alquiler {
     private Integer id;
 
     @Column(name = "ID_CLIENTE")
-    private Integer idCliente;
+    private String idCliente;
 
     @Column(name = "ESTADO")
     private Integer estado;

@@ -1,4 +1,4 @@
-package utn.backend.grupo128.alquileres.aplicattion.controllers;
+package utn.backend.grupo128.alquileres.application.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
