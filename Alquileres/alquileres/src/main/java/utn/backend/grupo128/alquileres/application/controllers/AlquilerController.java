@@ -34,6 +34,12 @@ public class AlquilerController {
         return ResponseEntity.ok(alquiler);
     }
 
+    @GetMapping(params = {"idAlquiler"})
+    public ResponseEntity<Object> terminarAlquiler(@RequestParam Integer idAlquiler, Integer idEstacionDevolucion) {
+        Alquiler alquiler = service.finalizarAlquiler(idAlquiler, idEstacionDevolucion);
+        return ResponseEntity.ok(alquiler);
+    }
+
     @GetMapping(params = {"minId","maxId"})
     public ResponseEntity<Object> alquilerCercano (@RequestParam Integer minId, @RequestParam Integer maxId) {
         try {
