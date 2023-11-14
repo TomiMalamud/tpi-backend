@@ -10,8 +10,14 @@ import java.time.LocalDateTime;
 public class Alquiler {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @GeneratedValue(generator = "alquiler_sequence")
+    @TableGenerator (name = "alquiler_sequence",
+    table = "sqlite_sequence",
+    pkColumnName = "name",
+    valueColumnName = "seq",
+    pkColumnValue = "ALQUILERES",
+    allocationSize = 1
+    )
     private Integer id;
 
     @Column(name = "ID_CLIENTE")

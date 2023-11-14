@@ -18,7 +18,7 @@ public class CrearAlquilerRequest {
     private String idCliente;
 
     @NotNull
-    private Integer estacionRetiroId;
+        private Integer estacionRetiroId;
 
 
 

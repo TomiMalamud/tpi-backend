@@ -39,5 +39,11 @@ public class AlquilerService {
     }
 
 
+    public List<Alquiler> findByAlquilerCercano(Integer minId, Integer maxId) {
+        List<Alquiler> listaAlquileres = getAll().stream().filter(alquiler -> alquiler.getId() >= minId
+        && alquiler.getId() <= maxId).toList();
+
+       return listaAlquileres;
+    }
 }
 

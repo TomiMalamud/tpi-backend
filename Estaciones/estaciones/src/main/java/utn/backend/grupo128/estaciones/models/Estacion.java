@@ -10,8 +10,14 @@ import java.time.LocalDateTime;
 public class Estacion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @GeneratedValue(generator = "estacion_sequence")
+    @TableGenerator(name = "estacion_sequence",
+    table = "sqlite_sequence",
+    pkColumnName = "name",
+    valueColumnName = "seq",
+    pkColumnValue = "ESTACIONES",
+    allocationSize = 1
+    )
     private Integer id;
 
     @Embedded
