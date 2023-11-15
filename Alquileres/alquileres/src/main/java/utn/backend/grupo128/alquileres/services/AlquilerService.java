@@ -59,6 +59,7 @@ public class AlquilerService {
 
             // Encuentra la tarifa aplicable
             Tarifa tarifaAplicada = encontrarTarifaAplicable(alquiler);
+            alquiler.setIdTarifa(tarifaAplicada.getId());
 
             // CALCULAR MONTO
             Float montoAlquiler = calcularMontoAlquiler(alquiler, tarifaAplicada);
