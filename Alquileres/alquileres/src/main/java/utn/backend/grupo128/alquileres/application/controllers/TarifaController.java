@@ -27,6 +27,4 @@ public class TarifaController {
         return ResponseEntity.ok(service.getAll());
     }
 
-
-
 }
