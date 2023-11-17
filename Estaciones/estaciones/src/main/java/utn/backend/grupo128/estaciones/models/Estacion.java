@@ -33,7 +33,6 @@ public class Estacion {
 
     }
 
-
     public Estacion(NombreEstacion nombre, LocalDateTime fechaHoraCreacion, Coordenada coordenada) {
         this.nombre = nombre;
         this.fechaHoraCreacion = fechaHoraCreacion;

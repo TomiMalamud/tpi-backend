@@ -1,61 +1,71 @@
 package utn.backend.grupo128.estaciones.services;
 
 import jakarta.transaction.Transactional;
-import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import utn.backend.grupo128.estaciones.exceptions.StationNotFoundException;
 import utn.backend.grupo128.estaciones.models.Coordenada;
 import utn.backend.grupo128.estaciones.models.Estacion;
 import utn.backend.grupo128.estaciones.models.NombreEstacion;
 import utn.backend.grupo128.estaciones.repositories.EstacionRepository;
+import utn.backend.grupo128.estaciones.util.CalculadorDistancia;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 
 
 @Service
 public class EstacionService {
 
-    private final EstacionRepository repository;
+    private final EstacionRepository estacionRepository;
 
     public EstacionService(EstacionRepository repository) {
-        this.repository = repository;
+        this.estacionRepository = repository;
     }
 
 
     public List<Estacion> getAll() {
-        return repository.findAll();
+        return estacionRepository.findAll();
     }
 
 
     public Estacion findByEstacionCercana(Double latitud, Double longitud) {
-        Iterable<Estacion> listaEstaciones = getAll();
-
-        Coordenada coordenadaOrigen = new Coordenada(latitud, longitud);
-
-        Estacion estacionCercana = new Estacion();
-        var distanciaCercana = -1.0;
+        List<Estacion> listaEstaciones = getAll();
+        Estacion estacionCercana = null;
+        double distanciaCercana = Double.MAX_VALUE;
 
         for (Estacion estacion : listaEstaciones) {
+            double distancia = CalculadorDistancia.calcularDistanciaEuclidea(
+                    latitud, longitud,
+                    estacion.getCoordenada().getLatitud(), estacion.getCoordenada().getLongitud());
 
-            var distancia = estacion.getCoordenada().calularDistancia(coordenadaOrigen);
-
-            if (distanciaCercana == -1.0) {
-                distanciaCercana = distancia;
-                estacionCercana = estacion;
-            } else if (distancia < distanciaCercana) {
+            if (distancia < distanciaCercana) {
                 distanciaCercana = distancia;
                 estacionCercana = estacion;
             }
         }
 
+        if (estacionCercana == null) {
+            throw new StationNotFoundException("No se encontraron estaciones.");
+        }
+
         return estacionCercana;
     }
+
 
     @Transactional
     public Estacion create(NombreEstacion nombre, LocalDateTime fechaHoraCreacion, Coordenada coordenada) {
         Estacion estacion = new Estacion(nombre, fechaHoraCreacion, coordenada);
-        return repository.save(estacion);
+        return estacionRepository.save(estacion);
     }
+
+    public double getDistanciaEntreEstaciones(long estacionId1, long estacionId2) {
+        Estacion station1 = estacionRepository.findById(estacionId1).orElseThrow(() -> new StationNotFoundException("Estación " + estacionId1 + " no encontrada"));
+        Estacion station2 = estacionRepository.findById(estacionId2).orElseThrow(() -> new StationNotFoundException("Estación " + estacionId2 + " no encontrada"));
+
+        return CalculadorDistancia.calcularDistanciaEuclidea(
+                station1.getCoordenada().getLatitud(), station1.getCoordenada().getLongitud(),
+                station2.getCoordenada().getLatitud(), station2.getCoordenada().getLongitud()
+        );
+    }
+
 }
