@@ -1,38 +1,34 @@
 package utn.backend.grupo128.alquileres.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class ConversorMonedaService {
 
-    private final WebClient.Builder webClientBuilder;
+    private final RestTemplate restTemplate;
 
-    @Autowired
-    public ConversorMonedaService(WebClient.Builder webClientBuilder) {
-        this.webClientBuilder = webClientBuilder;
+    public ConversorMonedaService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
-     public Mono<Float> convertirMoneda(Float monto, String monedaDestino) {
-        return Mono.just(monto);
-        /*
-        return webClientBuilder.build().post()
-                .uri("http://34.82.105.125:8080/convertir")
-                .bodyValue(new ConversionRequest(monto, monedaDestino))
-                .retrieve()
-                .bodyToMono(ConversionResponse.class)
-                .map(response -> response.getImporte());
-    */
+    public Float convertirMoneda(String monedaDestino, Float importe) {
+        String url = "http://34.82.105.125:8080/convertir";
+        String requestJson = String.format("{\"moneda_destino\":\"%s\",\"importe\":%f}", monedaDestino, importe);
+
+        ConversionResponse response = restTemplate.postForObject(url, requestJson, ConversionResponse.class);
+        return response != null ? response.getImporte() : null;
     }
 
-    static class ConversionRequest {
-        // ... campos y métodos ...
-    }
+    private static class ConversionResponse {
+        private Float importe;
 
-    static class ConversionResponse {
-        // ... campos y métodos ...
+        public Float getImporte() {
+            return importe;
+        }
+
+        public void setImporte(Float importe) {
+            this.importe = importe;
+        }
     }
 }
-

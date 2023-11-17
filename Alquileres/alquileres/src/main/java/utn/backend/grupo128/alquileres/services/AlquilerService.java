@@ -3,6 +3,7 @@ package utn.backend.grupo128.alquileres.services;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -26,14 +27,15 @@ public class AlquilerService {
     private final RestTemplate restTemplate;
     @Value("${gateway.base-url}")
     private String gatewayBaseUrl;
-
+    private final ConversorMonedaService conversorMonedaService;
 
     public AlquilerService(AlquilerRepository alquilerRepository,
                            TarifaRepository tarifaRepository,
-                           RestTemplate restTemplate) {
+                           RestTemplate restTemplate, ConversorMonedaService conversorMonedaService) {
         this.alquilerRepository = alquilerRepository;
         this.tarifaRepository = tarifaRepository;
         this.restTemplate = restTemplate;
+        this.conversorMonedaService=conversorMonedaService;
     }
 
 
@@ -53,7 +55,7 @@ public class AlquilerService {
     }
 
     @Transactional
-    public Alquiler finalizarAlquiler(Integer idAlquiler, Integer idEstacionDevolucion) {
+    public Alquiler finalizarAlquiler(Integer idAlquiler, Integer idEstacionDevolucion, String monedaDestino) {
         Alquiler alquiler = alquilerRepository.findById(idAlquiler)
                 .orElseThrow(() -> new EntityNotFoundException("Alquiler no encontrado con ID: " + idAlquiler));
 
@@ -72,6 +74,11 @@ public class AlquilerService {
         // CALCULAR MONTO
         Float montoAlquiler = calcularMontoAlquiler(alquiler, tarifaAplicada, distancia);
         alquiler.setMonto(montoAlquiler);
+
+        if (monedaDestino != null && !monedaDestino.isEmpty()) {
+            Float montoConvertido = conversorMonedaService.convertirMoneda(monedaDestino, montoAlquiler);
+            alquiler.setMonto(montoConvertido);
+        }
 
         // Guarda el alquiler actualizado en la base de datos
         return alquilerRepository.save(alquiler);

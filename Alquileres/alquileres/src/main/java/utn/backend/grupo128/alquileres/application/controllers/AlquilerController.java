@@ -36,8 +36,9 @@ public class AlquilerController {
 
     @PutMapping("/{idAlquiler}/terminar")
     public ResponseEntity<Alquiler> terminarAlquiler(@PathVariable Integer idAlquiler,
-                                                     @RequestParam Integer idEstacionDevolucion) {
-        Alquiler alquiler = service.finalizarAlquiler(idAlquiler, idEstacionDevolucion);
+                                                     @RequestParam Integer idEstacionDevolucion,
+                                                     @RequestParam(required = false) String monedaDestino) {
+        Alquiler alquiler = service.finalizarAlquiler(idAlquiler, idEstacionDevolucion, monedaDestino);
         return ResponseEntity.ok(alquiler);
     }
 
