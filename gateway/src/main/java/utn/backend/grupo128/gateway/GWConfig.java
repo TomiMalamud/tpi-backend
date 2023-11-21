@@ -37,7 +37,11 @@ public class GWConfig {
             Exception {
         http.authorizeExchange(exchanges -> exchanges
 
-                                .pathMatchers("/api/alquileres/**","/api/estaciones/**", "/api/tarifas/**")
+                                .pathMatchers("/api/alquileres/**")
+                                .hasRole("CLIENTE")
+                                .pathMatchers("/api/estaciones/**")
+                                .hasRole("ADMINISTRADOR")
+                                .pathMatchers("/api/tarifas/**")
                                 .permitAll()
                                 .anyExchange()
                                 .authenticated()
