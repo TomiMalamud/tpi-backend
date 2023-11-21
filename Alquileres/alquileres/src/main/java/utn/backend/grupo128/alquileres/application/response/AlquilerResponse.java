@@ -14,27 +14,27 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AlquilerResponse {
 
-    private Integer id;
-    private String idCliente;
-    private Integer estado;
-    private Integer estacionRetiro;
-    private Integer estacionDevolucion;
-    private LocalDateTime fechaHoraRetiro;
-    private LocalDateTime fechaHoraDevolucion;
-    private Float monto;
-    private Integer idTarifa;
+    Integer id;
+    String idCliente;
+    Integer estado;
+    Integer estacionRetiro;
+    Integer estacionDevolucion;
+    LocalDateTime fechaHoraRetiro;
+    LocalDateTime fechaHoraDevolucion;
+    Float monto;
+    Integer idTarifa;
 
-    public static AlquilerResponse from(Alquiler aAlquiler) {
+    public static AlquilerResponse from(Alquiler unAlquiler) {
         return AlquilerResponse.builder()
-                .id(aAlquiler.getId())
-                .idCliente(aAlquiler.getIdCliente())
-                .estado(aAlquiler.getEstado())
-                .estacionRetiro(aAlquiler.getEstacionRetiro())
-                .estacionDevolucion(aAlquiler.getEstacionDevolucion())
-                .fechaHoraRetiro(aAlquiler.getFechaHoraRetiro())
-                .fechaHoraDevolucion(aAlquiler.getFechaHoraDevolucion())
-                .monto(aAlquiler.getMonto())
-                .idTarifa(aAlquiler.getIdTarifa())
+                .id(unAlquiler.getId())
+                .idCliente(unAlquiler.getIdCliente())
+                .estado(unAlquiler.getEstado())
+                .estacionRetiro(unAlquiler.getEstacionRetiro())
+                .estacionDevolucion(unAlquiler.getEstacionDevolucion())
+                .fechaHoraRetiro(unAlquiler.getFechaHoraRetiro())
+                .fechaHoraDevolucion(unAlquiler.getFechaHoraDevolucion())
+                .monto(unAlquiler.getMonto())
+                .idTarifa(unAlquiler.getIdTarifa())
                 .build();
     }
 

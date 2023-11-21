@@ -11,7 +11,6 @@ public class Tarifa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer id;
 
     @Column(name = "TIPO_TARIFA")

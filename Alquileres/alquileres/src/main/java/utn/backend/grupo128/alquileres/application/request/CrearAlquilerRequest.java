@@ -20,6 +20,4 @@ public class CrearAlquilerRequest {
     @NotNull
         private Integer estacionRetiroId;
 
-
-
 }
