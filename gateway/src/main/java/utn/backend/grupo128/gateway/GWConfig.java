@@ -37,10 +37,8 @@ public class GWConfig {
             Exception {
         http.authorizeExchange(exchanges -> exchanges
 
-                                .pathMatchers("/api/alquileres/**")
-                                .hasRole("CLIENTE")
-                                .pathMatchers("/api/estaciones/**")
-                                .hasRole("CLIENTE")
+                                .pathMatchers("/api/alquileres/**","/api/estaciones/**", "/api/tarifas/**")
+                                .permitAll()
                                 .anyExchange()
                                 .authenticated()
                 ).oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtDecoder(jwtDecoder())))
